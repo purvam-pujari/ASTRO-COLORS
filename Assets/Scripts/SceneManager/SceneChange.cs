@@ -15,4 +15,8 @@ public class SceneChange : MonoBehaviour
         // Debug.Log("here");
         SceneManager.LoadScene("Tutorial");
     }
+
+    public void LoadPurchaseStore() {
+        SceneManager.LoadScene("PurchaseStore");
+    }
 }

@@ -42,6 +42,7 @@ public class TunnelManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         if (playerTransform.position.z - offset > (spawnZ - numOfCylinders * cylinderLength))
         {
             SpawnCylinder(ChooseIndex(), ChooseAngle());

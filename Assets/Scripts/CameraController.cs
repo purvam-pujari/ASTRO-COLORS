@@ -11,11 +11,13 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        offset = transform.position - player.transform.position;
+        player = GameObject.FindGameObjectWithTag("Player");
+        // offset = transform.position - player.transform.position;
     }
 
     void LateUpdate()
     {
-        transform.position = player.transform.position + offset;
+        player = GameObject.FindGameObjectWithTag("Player");
+        transform.position = new Vector3(0, -1, player.transform.position.z - 3);
     }
 }

@@ -12,13 +12,16 @@ public class Slideshow : MonoBehaviour
     private int currentSlide = 0;
     private float timeSinceLast = 1.0f;
     public Image image;
+    public Text SlideNumber;
     // Start is called before the first frame update
     void Start()
     {
         image= GameObject.FindGameObjectWithTag("Tutorial").GetComponent<Image>();
         image.sprite = slides[currentSlide];
-        currentSlide++;
-        // image.sprite = temp;
+    }
+
+    void Update() {
+        SlideNumber.text = currentSlide+1 + "/"  + slides.Length;
     }
 
     public void NextSlide() {

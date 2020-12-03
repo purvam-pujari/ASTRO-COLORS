@@ -20,6 +20,7 @@ public class GameMaster : MonoBehaviour {
     public float difficultyModifier;
 
     public GameOverMenu gom;
+    public GameObject Ship1, DefaultShip;
 
     // Use this for initialization
     public void Start ()
@@ -33,6 +34,13 @@ public class GameMaster : MonoBehaviour {
         values[5] = 1f;
 
         gameOver = false;
+        if(PlayerPrefs.GetInt("PlayerShip") == 1) {
+            // Debug.Log("!!!!!!here");
+            Ship1.SetActive(true);
+            // defaultShip.SetActive(false);
+        } else {
+            DefaultShip.SetActive(true);
+        }
         
         player = GameObject.FindGameObjectWithTag("Player");
 	}
@@ -40,6 +48,7 @@ public class GameMaster : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         if (gameOver)
         {
             OnGameOver();

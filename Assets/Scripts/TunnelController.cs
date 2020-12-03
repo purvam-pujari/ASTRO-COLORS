@@ -41,63 +41,32 @@ public class TunnelController : MonoBehaviour {
                 curVertex++;
                 rotationTime = 0;
             }
-
-            // Touch
-            if(Input.touches.Length > 0)
-            {
-                Touch t = Input.GetTouch(0);
-                if(t.phase == TouchPhase.Began)
-                {
-                    //save began touch 2d point
-                    fingerDown = new Vector2(t.position.x, t.position.y);
-                }
-                if(t.phase == TouchPhase.Ended)
-                {
-                    //save ended touch 2d point
-                    fingerUp = new Vector2(t.position.x, t.position.y);             
-                    if(currentSwipe.x < 0 && (currentSwipe.y > -0.5f || currentSwipe.y < 0.5f))
-                    {
-                        // Debug.Log("left swipe");
-                        desiredRot = curVertex * 60 - 60f;
-                        curVertex--;
-                        rotationTime = 0;
-                    }
-                    //swipe right
-                    if(currentSwipe.x > 0 && (currentSwipe.y > -0.5f || currentSwipe.y < 0.5f))
-                    {
-                        // Debug.Log("right swipe");
-                        desiredRot = curVertex * 60 + 60f;
-                        curVertex++;
-                        rotationTime = 0;
-                    }
-                }
+            
+            // Swipe Controls
+            if(Input.GetMouseButtonDown(0)){
+                fingerDown = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
 
-            // Mouse swipe
-            // if(Input.GetMouseButtonDown(0)){
-            //     fingerDown = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            // }
-
-            // if(Input.GetMouseButtonUp(0)){
-            //     fingerUp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            //     currentSwipe = new Vector2(fingerUp.x - fingerDown.x, fingerUp.y - fingerDown.y);
-            //     //swipe left
-            //     if(currentSwipe.x < 0 && (currentSwipe.y > -0.5f || currentSwipe.y < 0.5f))
-            //     {
-            //         // Debug.Log("left swipe");
-            //         desiredRot = curVertex * 60 - 60f;
-            //         curVertex--;
-            //         rotationTime = 0;
-            //     }
-            //     //swipe right
-            //     if(currentSwipe.x > 0 && (currentSwipe.y > -0.5f || currentSwipe.y < 0.5f))
-            //     {
-            //         // Debug.Log("right swipe");
-            //         desiredRot = curVertex * 60 + 60f;
-            //         curVertex++;
-            //         rotationTime = 0;
-            //     }
-            // }
+            if(Input.GetMouseButtonUp(0)){
+                fingerUp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                currentSwipe = new Vector2(fingerUp.x - fingerDown.x, fingerUp.y - fingerDown.y);
+                //swipe left
+                if(currentSwipe.x < 0 && (currentSwipe.y > -0.5f || currentSwipe.y < 0.5f))
+                {
+                    // Debug.Log("left swipe");
+                    desiredRot = curVertex * 60 - 60f;
+                    curVertex--;
+                    rotationTime = 0;
+                }
+                //swipe right
+                if(currentSwipe.x > 0 && (currentSwipe.y > -0.5f || currentSwipe.y < 0.5f))
+                {
+                    // Debug.Log("right swipe");
+                    desiredRot = curVertex * 60 + 60f;
+                    curVertex++;
+                    rotationTime = 0;
+                }
+            }
 
             curVertex = curVertex % 6;
             Quaternion desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, desiredRot);

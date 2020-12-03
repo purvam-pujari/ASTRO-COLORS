@@ -35,6 +35,7 @@ public class GameMasterMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void RecolorTiles()
