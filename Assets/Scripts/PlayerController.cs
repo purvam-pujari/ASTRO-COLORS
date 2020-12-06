@@ -22,13 +22,45 @@ public class PlayerController : MonoBehaviour
     GameMaster gmScript;
     void Start()
     {
+        // rb = GetComponent<Rigidbody>();
+        // gmScript = gm.GetComponent<GameMaster>();
+
+        // Color baseColorRed = new Color( 1f,1f,1f);
+        // Renderer rend = GetComponent<Renderer>();
+        // Material mat = rend.material;
+        // mat.SetColor("_Color", baseColorRed);
+
         rb = GetComponent<Rigidbody>();
         gmScript = gm.GetComponent<GameMaster>();
 
-        Color baseColorRed = new Color( 1f,1f,1f);
+        //Color baseColorRed = new Color( 1f,1f,1f);
+        //Color32 baseColorRed = new Color32(102, 0, 0, 255);
+        Color baseColorBlue = new Color( 0f,0.4f,0.5f);
+        Color baseColorGreen = new Color( 0.0f,0.4f,0f);
+
+        Color baseColorRed = new Color( 0.4f,0f,0f);
         Renderer rend = GetComponent<Renderer>();
         Material mat = rend.material;
-        mat.SetColor("_Color", baseColorRed);
+       
+        if(PlayerPrefs.GetInt("Revived")!=0)
+        {
+            //Debug.Log("colorofspaceship:"+PlayerPrefs.GetString("colorofspaceship"));
+            if(PlayerPrefs.GetString("colorofspaceship")=="Red")
+            {
+                // Debug.Log("red color");
+                 mat.SetColor("_Color", baseColorRed);
+            }
+            else if(PlayerPrefs.GetString("colorofspaceship")=="Blue")
+            {   
+                mat.SetColor("_Color", baseColorBlue);
+                // Debug.Log("blue color");
+            }
+            else
+                mat.SetColor("_Color", baseColorGreen);
+
+        }
+        else
+            mat.SetColor("_Color", baseColorRed);
     }
 
     void FixedUpdate()
@@ -93,8 +125,9 @@ public class PlayerController : MonoBehaviour
                         {
                             { "totalColorLoops", color_loops_passed}
                         });
-
+                
                 gmScript.SetGameOver(true);
+                rb.position=new Vector3 (rb.position.x,rb.position.y,PlayerPrefs.GetFloat("PlayerPositionZ"));
             }
 
         }
@@ -182,13 +215,14 @@ public class PlayerController : MonoBehaviour
                         });
             string spaceship_color = "";
             if(mat.color==baseColorRed)spaceship_color="Red";
-            if(mat.color==baseColorRed)spaceship_color="Blue";
-            if(mat.color==baseColorRed)spaceship_color="Green";
+            if(mat.color==baseColorBlue)spaceship_color="Blue";
+            if(mat.color==baseColorGreen)spaceship_color="Green";
             string color_loop = "";
             if(hit.gameObject.CompareTag("Red"))color_loop="Red";
             if(hit.gameObject.CompareTag("Blue"))color_loop="Blue";
             if(hit.gameObject.CompareTag("Green"))color_loop="Green";
             //analyticsResult = Analytics.CustomEvent("Expected : "+ spaceship_color + " | Actual : " + color_loop);
+            PlayerPrefs.SetString("colorofspaceship",spaceship_color);
             gmScript.SetGameOver(true);
         }
     }
@@ -210,6 +244,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 pos = new Vector3(0f, 0f, 0f);
                 var go = Instantiate(halloweenPrefab, transform.position+pos, Quaternion.identity, transform);
             }
+            FindObjectOfType<MusicP>().PlayHalSound();
             return;
         }
         if(other.gameObject.CompareTag("life_pot")){
@@ -232,6 +267,7 @@ public class PlayerController : MonoBehaviour
                 go.GetComponent<TextMesh>().color = baseColorRed;
                 go.GetComponent<TextMesh>().text = "+50";
             }
+            FindObjectOfType<MusicP>().PlayCoinSound();
             Destroy(other.gameObject);
         }
         else if(other.gameObject.CompareTag("BlueCoin")&& (mat.color==baseColorBlue))
@@ -246,6 +282,7 @@ public class PlayerController : MonoBehaviour
                 go.GetComponent<TextMesh>().color = baseColorBlue;
                 go.GetComponent<TextMesh>().text = "+50";
             }
+            FindObjectOfType<MusicP>().PlayCoinSound();
             Destroy(other.gameObject);
         }
         else if(other.gameObject.CompareTag("GreenCoin") && (mat.color==baseColorGreen))
@@ -260,6 +297,7 @@ public class PlayerController : MonoBehaviour
                 go.GetComponent<TextMesh>().color = baseColorGreen;
                 go.GetComponent<TextMesh>().text = "+50";
             }
+            FindObjectOfType<MusicP>().PlayCoinSound();
             Destroy(other.gameObject);
         } else if(!other.gameObject.CompareTag("life_pot") && !other.gameObject.CompareTag("death_pot") &&!other.gameObject.CompareTag("RedCoin") && (mat.color==baseColorRed) || (!other.gameObject.CompareTag("BlueCoin")&& (mat.color==baseColorBlue)) || (!other.gameObject.CompareTag("GreenCoin") && (mat.color==baseColorGreen))){
             wrong_coins_collected++;

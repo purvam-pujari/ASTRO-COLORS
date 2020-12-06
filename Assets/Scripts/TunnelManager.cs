@@ -13,7 +13,7 @@ public class TunnelManager : MonoBehaviour {
     public int maxNumOfFreeCylinders = 5;
     private int curNumOfFreeCylinders;
     private int lastIndex = 0;
-    GameMaster gmScript;
+    private GameMaster gmScript;
 
     //public const float ZERO = 12, ONE = 3, TWO = 2, THREE = 1, FOUR = 2;
 
@@ -33,10 +33,12 @@ public class TunnelManager : MonoBehaviour {
         for (int i = 0; i < numOfCylinders; i++)
             SpawnCylinder();
 
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        // playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         GameObject gm = GameObject.FindGameObjectWithTag("GameMaster");
+        
+        
         gmScript = gm.GetComponent<GameMaster>();
-
+        // Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>Here", gmScript);
     }
 
     // Update is called once per frame

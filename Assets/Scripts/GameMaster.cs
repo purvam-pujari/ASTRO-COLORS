@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour {
     //public static float rMin = 1;
 
-    private int score = 0;
+   // private int score = 0;
+    public int score;
     private bool gameOver;
     private GameObject[] tiles;
 
-    private GameObject player;
+    public GameObject player;
 
     public float[] values = new float[6];
 
@@ -21,19 +22,26 @@ public class GameMaster : MonoBehaviour {
 
     public GameOverMenu gom;
     public GameObject Ship1, DefaultShip;
-
+    public int temp;
+    const float stabley=-2.21f;
+    public static GameMaster instance;
+    private void Awake() {
+        if(instance==null)
+            instance=this;    
+       
+    }
     // Use this for initialization
     public void Start ()
     {
-        score = 0;
-        values[0] = 0f;
-        values[1] = 0.1f;
-        values[2] = 0f;
-        values[3] = 0.7f;
-        values[4] = 0.4f;
-        values[5] = 1f;
+        // score = 0;
+        // values[0] = 0f;
+        // values[1] = 0.1f;
+        // values[2] = 0f;
+        // values[3] = 0.7f;
+        // values[4] = 0.4f;
+        // values[5] = 1f;
 
-        gameOver = false;
+        // gameOver = false;
         if(PlayerPrefs.GetInt("PlayerShip") == 1) {
             // Debug.Log("!!!!!!here");
             Ship1.SetActive(true);
@@ -43,6 +51,60 @@ public class GameMaster : MonoBehaviour {
         }
         
         player = GameObject.FindGameObjectWithTag("Player");
+
+        temp=PlayerPrefs.GetInt("Revived");
+        
+        //Debug.Log("temp:"+temp);
+        if(temp==1 && PlayerPrefs.GetInt("timesrevived")<=2)
+        {    
+            if(PlayerPrefs.HasKey("Score"))
+                score=PlayerPrefs.GetInt("Score");
+            
+            player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.position=new Vector3 (player.transform.position.x,player.transform.position.y,PlayerPrefs.GetFloat("PlayerPositionZ"));
+           
+            Debug.Log("y position:"+player.transform.position.y);
+            //added 03-12
+            GameOverMenu.instance.times_continued=PlayerPrefs.GetInt("timesrevived");
+            
+        } else {
+            score=0;
+            if(PlayerPrefs.HasKey("Revived"))
+            PlayerPrefs.SetInt("Revived", 0);
+            //Debug.Log("in else part");
+            player = GameObject.FindGameObjectWithTag("Player");
+            //added 03-12
+           
+
+             //added 01-12
+            //PlayerPrefs.SetInt("PlayerColorInt",0);
+            //Color baseColorRed = new Color( 1f,1f,1f);
+            //PlayerPrefs.SetColor("PlayerColor",baseColorRed);
+        
+        }
+        //score = 0;
+        values[0] = 0f;
+        values[1] = 0.1f;
+        values[2] = 0f;
+        values[3] = 0.7f;
+        values[4] = 0.4f;
+        values[5] = 1f;
+
+
+        //added 03-12
+        if(GameOverMenu.instance.times_continued==2)
+        {
+             gom.disableButton();
+        }
+        if(PlayerPrefs.GetInt("timesrevived")>2)
+        {
+                gameOver=true;
+                GameOverMenu.instance.times_continued=0;
+                //gom.enableButton();
+                //gom.disableButton();
+        }
+        else
+            gameOver = false;
 	}
 	
 	// Update is called once per frame

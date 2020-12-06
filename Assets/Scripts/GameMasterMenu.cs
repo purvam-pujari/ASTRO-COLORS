@@ -64,6 +64,7 @@ public class GameMasterMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        PlayerPrefs.SetInt("Revived", 0);
         SceneManager.LoadScene("The Fall");
     }
 
