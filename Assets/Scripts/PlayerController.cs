@@ -6,7 +6,11 @@ using UnityEngine.Analytics;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float timeRemaining = 2;
+    public bool timerIsRunning = false;
+    public float spaceTimeRemaining = 2;
+    public bool spaceTimerIsRunning = false;
+    public float speed, add_speed=0f;
     private Rigidbody rb;
     public GameObject gm;
     public int count=0;
@@ -65,11 +69,48 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                add_speed=0f;
+                timeRemaining = 2;
+                timerIsRunning = false;
+            }
+        }
+
+        if (spaceTimerIsRunning)
+        {
+            if (spaceTimeRemaining > 0)
+            {
+                spaceTimeRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                add_speed=0f;
+                spaceTimeRemaining = 2;
+                spaceTimerIsRunning = false;
+            }
+        }
+
+
+        // if(Input.GetKeyDown("space")){
+        //     this.spaceTimerIsRunning = true;
+        //     this.spaceTimeRemaining=3;
+        //     Vector3 temp = new Vector3(this.transform.position.x ,this.transform.position.y+1.2f, this.transform.position.z);
+        //     this.transform.position = temp;
+        // }
        // AnalyticsResult analyticsResult;
         if (!gmScript.IsGameOver())
         {
-            rb.velocity = new Vector3(0, rb.velocity.y, speed);
-
+            // rb.velocity = new Vector3(0, rb.velocity.y, speed);
+            rb.velocity = new Vector3(0, rb.velocity.y, speed + add_speed);
             rb.AddForce(Vector3.down * 100f);
 
             if (this.transform.position.y < -3)
@@ -248,13 +289,32 @@ public class PlayerController : MonoBehaviour
             return;
         }
         if(other.gameObject.CompareTag("life_pot")){
+            this.timerIsRunning = true;
+            this.timeRemaining=2;
+            this.add_speed -= 2f;
+            if(Floating50Prefab!=null){
+                 Vector3 pos = new Vector3(0f, 1.3f, 0f);
+                var go = Instantiate(Floating50Prefab, transform.position+pos, Quaternion.identity, transform);
+                go.GetComponent<TextMesh>().color = baseColorGreen;
+                go.GetComponent<TextMesh>().text = "Speed ---";
+            }
             Destroy(other.gameObject);
             return;
         }
         if(other.gameObject.CompareTag("death_pot")){
+            this.timerIsRunning = true;
+            this.timeRemaining=2;
+            this.add_speed += 2f;
+            if(Floating50Prefab!=null){
+                 Vector3 pos = new Vector3(0f, 1.3f, 0f);
+                var go = Instantiate(Floating50Prefab, transform.position+pos, Quaternion.identity, transform);
+                go.GetComponent<TextMesh>().color = baseColorRed;
+                go.GetComponent<TextMesh>().text = "Speed +++";
+            }
             Destroy(other.gameObject);
             return;
         }
+
         if(other.gameObject.CompareTag("RedCoin") && (mat.color==baseColorRed))
         {
             Debug.Log("Red Coin");

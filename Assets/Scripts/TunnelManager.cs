@@ -105,7 +105,7 @@ public class TunnelManager : MonoBehaviour {
             } else if(basic_count>3){
                 int color_idx = (int)(Random.Range(0f,1f)*10)%6;
                 Instantiate(coins[color_idx], new Vector3(0,0,spawnZ), Quaternion.Euler(0,0, ChooseAngle()*60f), cylinder.transform);
-            }
+             }
         }
     }
 
