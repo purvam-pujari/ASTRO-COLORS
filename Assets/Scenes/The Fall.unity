@@ -2208,7 +2208,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cf06482277ebd4e8305be52a1f7aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeRemaining: 2
+  timerIsRunning: 0
+  spaceTimeRemaining: 2
+  spaceTimerIsRunning: 0
   speed: 12
+  add_speed: 0
   gm: {fileID: 1245382202}
   count: 0
   coins_collected: 0
@@ -3190,7 +3195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1374372006
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3209,7 +3214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bf506af7c9f82474b956d242509b65a2, type: 2}
+  - {fileID: 2100000, guid: 2cabc6244dc687a4d89b3973eb70ccc3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3293,7 +3298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cf06482277ebd4e8305be52a1f7aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeRemaining: 2
+  timerIsRunning: 0
+  spaceTimeRemaining: 2
+  spaceTimerIsRunning: 0
   speed: 12
+  add_speed: 0
   gm: {fileID: 1245382202}
   count: 0
   coins_collected: 0
