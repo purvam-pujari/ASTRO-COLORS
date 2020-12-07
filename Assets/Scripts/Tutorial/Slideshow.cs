@@ -7,7 +7,7 @@ public class Slideshow : MonoBehaviour
 {
     public Sprite[] slides = new Sprite[8];
     // public Sprite temp;
-    public RectTransform rectTransform;
+    // public RectTransform rectTransform;
     public float changeTime = 10.0f;
     private int currentSlide = 0;
     private float timeSinceLast = 1.0f;
@@ -18,15 +18,17 @@ public class Slideshow : MonoBehaviour
     {
         image= GameObject.FindGameObjectWithTag("Tutorial").GetComponent<Image>();
         image.sprite = slides[currentSlide];
+        // SlideNumber.text = currentSlide+1 + "/"  + slides.Length;
     }
 
     void Update() {
-        SlideNumber.text = currentSlide+1 + "/"  + slides.Length;
+        
     }
 
     public void NextSlide() {
         currentSlide = (currentSlide + 1) % 8;
         image.sprite = slides[currentSlide];
+        SlideNumber.text = currentSlide+1 + "/"  + slides.Length;
     }
 
     public void PrevSlde() {
@@ -36,5 +38,6 @@ public class Slideshow : MonoBehaviour
             currentSlide -= 1;
         }
         image.sprite = slides[currentSlide];
+        SlideNumber.text = currentSlide+1 + "/"  + slides.Length;
     }
 }

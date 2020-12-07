@@ -42,6 +42,8 @@ public class GameOverMenu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        int left = 2-times_continued;
+        ContinueText.text = "Continue (" + left + ") left"; 
         if (toggle)
         {
             if(transitionAlpha < maxTrasitionAlpha)
@@ -90,8 +92,8 @@ public class GameOverMenu : MonoBehaviour {
     {
         //added 03-12
         PlayerPrefs.SetInt("timesrevived",times_continued+1);
+        // int left = 2 -times_continued;
        // Debug.Log("times_continued:"+times_continued);
-
         PlayerPrefs.SetInt("Revived", 1);
         //Debug.Log(PlayerPrefs.GetInt("Revived"));
         PlayerPrefs.SetInt("Score", GameMaster.instance.score);

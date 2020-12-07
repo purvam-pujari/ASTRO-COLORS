@@ -19,7 +19,7 @@ public class GameMaster : MonoBehaviour {
     public Text scoreText;
 
     public float difficultyModifier;
-
+    public GameObject Floating50Prefab;
     public GameOverMenu gom;
     public GameObject Ship1, DefaultShip;
     public int temp;
@@ -135,6 +135,18 @@ public class GameMaster : MonoBehaviour {
     public void IncreamentScore(int amount)
     {
         score += amount;
+        // string s = PlayerPrefs.GetString("HighScores");
+        // if(!(s.Length == 0)){
+        //     String[] scores = s.Split(',');
+        //     if(score > 1){
+        //         if(Floating50Prefab!=null){
+        //          Vector3 pos = new Vector3(-8f, player.transform.position.y+4f, player.transform.position.z);
+        //         var go = Instantiate(Floating50Prefab, transform.position+pos, Quaternion.identity, transform);
+        //         go.GetComponent<TextMesh>().color = new Color( 0.5f,0.5f,0.5f);;
+        //         go.GetComponent<TextMesh>().text = "Congrats!";
+        //     }
+        //     }
+        // }
         scoreText.text = score.ToString();
         if (score % 100 == 0 && score != 0)
         {
